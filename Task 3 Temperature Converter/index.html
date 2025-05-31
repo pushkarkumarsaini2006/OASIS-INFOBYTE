@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Temperature Converter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .button {
+      text-align: center;
+    }
+    .button button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Temperature Converter</h2>
+    <div class="input-group">
+      <label for="celsius">Celsius (°C)</label>
+      <input type="number" id="celsius" placeholder="Enter Celsius">
+    </div>
+    <div class="input-group">
+      <label for="fahrenheit">Fahrenheit (°F)</label>
+      <input type="number" id="fahrenheit" placeholder="Enter Fahrenheit">
+    </div>
+    <div class="input-group">
+      <label for="kelvin">Kelvin (K)</label>
+      <input type="number" id="kelvin" placeholder="Enter Kelvin">
+    </div>
+    <div class="button">
+      <button id="clear">Clear</button>
+    </div>
+  </div>
+
+  <script>
+    const celsiusInput = document.getElementById('celsius');
+    const fahrenheitInput = document.getElementById('fahrenheit');
+    const kelvinInput = document.getElementById('kelvin');
+    const clearButton = document.getElementById('clear');
+
+    function roundNumber(number) {
+      return Math.round(number * 100) / 100;
+    }
+
+    function convertFromCelsius() {
+      const celsius = parseFloat(celsiusInput.value);
+      if (isNaN(celsius)) return;
+      fahrenheitInput.value = roundNumber((celsius * 9/5) + 32);
+      kelvinInput.value = roundNumber(celsius + 273.15);
+    }
+
+    function convertFromFahrenheit() {
+      const fahrenheit = parseFloat(fahrenheitInput.value);
+      if (isNaN(fahrenheit)) return;
+      celsiusInput.value = roundNumber((fahrenheit - 32) * 5/9);
+      kelvinInput.value = roundNumber(((fahrenheit - 32) * 5/9) + 273.15);
+    }
+
+    function convertFromKelvin() {
+      const kelvin = parseFloat(kelvinInput.value);
+      if (isNaN(kelvin)) return;
+      celsiusInput.value = roundNumber(kelvin - 273.15);
+      fahrenheitInput.value = roundNumber(((kelvin - 273.15) * 9/5) + 32);
+    }
+
+    celsiusInput.addEventListener('input', convertFromCelsius);
+    fahrenheitInput.addEventListener('input', convertFromFahrenheit);
+    kelvinInput.addEventListener('input', convertFromKelvin);
+
+    clearButton.addEventListener('click', () => {
+      celsiusInput.value = '';
+      fahrenheitInput.value = '';
+      kelvinInput.value = '';
+    });
+  </script>
+</body>
+</html>
